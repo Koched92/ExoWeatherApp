@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Météo Locale
+{% endblock %}
+
+{% block body %}
+
+   <!-- {{ dump(weather) }}-->
+    <div class="container text-center">
+        <div class="banner">
+            <h1 style="text-shadow:1px 1px 10px #29293d;">Application Météo Locale</h1>
+        </div>
+
+        <div class="main-content text-center">
+            <form id="man-srch-form" class="row collapse">
+                <div class="form-group col-xs-12 col-sm-12">
+                    <h4 class="pull-left">Rechercher par nom de ville</h4>
+                </div>
+                <div class="form-group col-xs-12 col-sm-10">
+                    <input type="text" class="form-control" placeholder="Enter a city" id="tags" value="{% if weather %}{{ weather.name }},{{ weather.country }}{% else %}None{% endif %}">
+                </div>
+                <div class="form-group col-xs-12 col-sm-2">
+                    <button id="location_id" class="btn btn-default" type="button" onclick="this.blur();"><i class="fa fa-location-arrow "></i></button>
+                </div>
+            </form>
+
+            <div class="weather-data-container">
+                <div class="row pull-right weather-data-settings">
+                    <div class="col-xs-12">
+                        <a class="plain-anchor" href="#"><i class="fa fa-cog fa-2x dropdown dropdown-toggle" data-toggle="collapse" data-target="#man-srch-form"></i></a>
+                    </div>
+                </div>
+
+                <div class="row pull-right weather-app-info">
+                    <div class="col-xs-12">
+                        <a class="plain-anchor" href="#"><i class="fa fa-info-circle fa-2x dropdown dropdown-toggle" data-toggle="collapse" data-target="#weather-app-info-content-container"></i></a>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-6 col-lg-6">
+                        <div class="clockDisplay-container">
+                            <p id="dateDisplay"></p>
+                            <h3 id="clockDisplay"></h3>
+                        </div>
+                    </div><!---end of col-xs-12-->
+                    <div class="col-xs-12 col-md-6 col-lg-6">
+                        <div class="curLocationDisp-container">
+                            <h3 id="curLocationDisplay"><small style="color: #FFFFFF">{% if weather %}{{ weather.name }},{{ weather.country }}  <img src="http://openweathermap.org/img/w/{{ weather.icon }}.png" style="opacity: 0.8;filter: alpha(opacity=80);border-radius:15px;"  height="48px">{% else %}None{% endif %}</small></h3>
+                            </h3>
+                            <div id="weather-data">
+                            </div>
+                        </div>
+                    </div><!---end of col-xs-12-->
+                </div><!---end row 1--->
+
+                <div class="row">
+                    <div class="col-xs-4 col-md-4">
+                        <div>
+                            <h4 class="disp-label">Temp <img src="/assets/thermometer.png" style="height: 40px" ></h4>
+                            <p id="tempDisplay">{% if weather %}
+                                    {{ weather.temperature|number_format(1, '.', ',')  }}°C
+                                {% else %}
+                                    N/A
+                                {% endif %}</p>
+                        </div>
+                    </div><!---end of col-xs-12-->
+                    <div class="col-xs-4 col-md-4">
+                        <div>
+                            <h4 class="disp-label">Humid <img src="/assets/icon-umberella.png" style="height: 40px" ></h4>
+                            <p id="humidDisplay">{% if weather %}
+                                    {{ weather.humidite }} %
+                                {% else %}
+                                    None
+                                {% endif %}</p>
+                        </div>
+                    </div><!---end of col-xs-12-->
+                    <div class="col-xs-4 col-md-4">
+                        <div>
+                            <h4 class="disp-label">Vent <img src="/assets/icon-wind.png" style="height: 40px"  ></h4>
+                            <p id="windDisplay">{% if weather %}
+                                    {{ weather.vent|number_format(1, '.', ',') }} km/h
+                                {% else %}
+                                    None
+                                {% endif %}</p>
+                        </div>
+                    </div><!---end of col-xs-12-->
+                </div><!---end row 1--->
+            </div><!--end weather-data-container-->
+        </div><!--end main-content-->
+
+        <!--App info-->
+        <div id="weather-app-info-content-container" class="collapse">
+            <ul style="margin:0;text-align:left;">
+                <li>
+                    Ceci est une application de météorologie locale.
+                </li>
+                <li>
+                    Veuillez verifier que l'option géolocalsation de votre navigateur est activée.
+                </li>
+                <li>
+                    Cliquez sur <i class="fa fa-cog"></i> et choissez l'option de géolocalisation en cliquant sur <i class="fa fa-location-arrow"></i>
+                </li>
+                <li>
+                    Une option de recherche aussi est à votre disposition, entrez un nom de ville <i class="fa fa-keyboard-o" aria-hidden="true"></i> est appuyez sur Entrée
+                </li>
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript" src="/assets/js/cities.json"></script>
+    <script src="/assets/js/hint.js"></script>
+{% endblock %}

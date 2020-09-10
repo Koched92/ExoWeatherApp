@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Météo NoName
+{% endblock %}
+
+{% block body %}
+    <div class="pt-3">
+        <div class="alert alert-dismissible alert-warning sph-warning">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <h4 class="alert-heading">Oupss! Belle erreur {% if exception %}{{ exception.code }}{% else %}None{% endif %}</h4>
+            <p class="mb-0">{% if exception %}{{ exception.message }}{% else %}None{% endif %}.</p>
+            <a href="/" class="alert-link">Revenir à la page d'accueil</a>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+{% endblock %}
